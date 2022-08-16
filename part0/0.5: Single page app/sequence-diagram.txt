@@ -1,4 +1,4 @@
-title 0.5: Single page app
+title 0.5: POST Single page app
 
 browser->server: HTTP https://studies.cs.helsinki.fi/exampleapp/new_note_spa
 server-->browser: content-type: application/json
