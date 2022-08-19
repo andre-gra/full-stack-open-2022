@@ -2,10 +2,10 @@ import { useState } from 'react'
 
 const StatisticLine = (props) => {
   return (
-    <div style={{display: "flex", justifyContent: "space-between"}}>
-      <span>{props.text}</span>
-      <span>{props.value}</span>
-    </div>
+    <tr>
+      <td>{props.text}</td>
+      <td>{props.value}</td>
+    </tr>
   )
 }
 
@@ -15,14 +15,16 @@ const Statistics = (props) => {
 
   if (props.sum > 0) {
     return (
-      <div style={{width: "200px"}}>
-        <StatisticLine text="good" value={props.good} />
-        <StatisticLine text="neutral" value={props.neutral} />
-        <StatisticLine text="bad" value={props.bad} />
-        <StatisticLine text="all" value={props.sum} />
-        <StatisticLine text="average" value={average} />
-        <StatisticLine text="positive" value={positive} />
-      </div>
+      <table style={{ width: "max-content" }}>
+        <tbody>
+          <StatisticLine text="good" value={props.good} />
+          <StatisticLine text="neutral" value={props.neutral} />
+          <StatisticLine text="bad" value={props.bad} />
+          <StatisticLine text="all" value={props.sum} />
+          <StatisticLine text="average" value={average} />
+          <StatisticLine text="positive" value={positive} />
+        </tbody>
+      </table>
     )
   }
 
