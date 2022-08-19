@@ -4,6 +4,20 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
 
+function sortAnecdote(array) {
+  const obj1 = Object.assign({}, array);
+  let sortable = [];
+  for (var el in obj1) {
+    sortable.push([el, obj1[el]]);
+  }
+
+  sortable.sort(function (a, b) {
+    return a[1] - b[1];
+  });
+
+  return sortable.reverse()
+}
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -19,20 +33,25 @@ const App = () => {
   const [selected, setSelected] = useState(0)
 
   const handleVote = (num) => {
-    const copy = [...votes ]
-    console.log("first", copy)
+    const copy = [...votes]
     copy[num]++
-    console.log("second", copy)
     setVotes(copy)
   }
 
   return (
     <>
       <div>
-        {anecdotes[selected]}<br/>has {votes[selected]} votes
+        <h1>Anecdote of the day</h1>
+        <div>
+          {anecdotes[selected]}<br />has {votes[selected]} votes
+        </div>
+        <button onClick={() => handleVote(selected)}>vote</button>
+        <button onClick={() => setSelected(getRandomInt(6))}>next anecdote</button>
       </div>
-      <button onClick={() => handleVote(selected)}>vote</button>
-      <button onClick={() => setSelected(getRandomInt(6))}>next anecdote</button>
+      <div>
+        <h1>Anecdote with most votes</h1>
+        {anecdotes[sortAnecdote(votes)[0][0]]}
+      </div>
     </>
   )
 }
