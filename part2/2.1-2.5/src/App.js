@@ -20,13 +20,14 @@ const Part = (props) => {
   )
 }
 
-const Total = (props) => {
-  let sum = 0
-  props.parts.map((part) => 
-    sum = sum + part.exercises
-  )
+const Total = ({ parts }) => {
+  const initialValue = 0
+  const sum = parts.reduce(
+    (previousValue, currentValue) => previousValue + currentValue.exercises
+    , initialValue
+    )
   return (
-    <p style={{fontWeight: "bold"}}>{`total of ${sum} ${sum > 1 ? "exercises" : "exercise"}`}</p>
+    <p style={{ fontWeight: "bold" }}>{`total of ${sum} ${sum > 1 ? "exercises" : "exercise"}`}</p>
   )
 }
 
