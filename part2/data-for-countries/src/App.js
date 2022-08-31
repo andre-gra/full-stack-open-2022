@@ -24,7 +24,7 @@ const App = () => {
       <h1>Data for Countries</h1>
         <Filter handleSearch={handleSearch} textToSearch={textToSearch} />
       <h2>Results:</h2>
-        <Nations nations={nations} textToSearch={textToSearch} />
+        <Nations nations={nations} textToSearch={textToSearch} setTextToSearch={setTextToSearch} />
     </div>
   )
 }

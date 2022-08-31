@@ -1,4 +1,7 @@
-const Nations = ({ nations, textToSearch }) => {
+const Nations = ({ nations, textToSearch, setTextToSearch }) => {
+  const handleClick = (event) => {
+    setTextToSearch(event.target.value)
+  }
   const filteredArray = nations.filter(nation => nation.name.common.toLowerCase().includes(textToSearch.toLowerCase()))
   if (textToSearch.length > 0) {
     if (filteredArray.length <= 10) {
@@ -7,7 +10,10 @@ const Nations = ({ nations, textToSearch }) => {
           <div>
             {filteredArray.map(nation => {
               return (
-                <span style={{ display: "block" }} key={nation.name.common}>{nation.name.common}</span>
+                <div style={{ display: "block" }} key={nation.name.common}>
+                  <span key={nation.name.common}>{nation.name.common}</span>
+                  <button value={nation.name.common} onClick={handleClick}>Show</button>
+                </div>
               )
             })}
           </div>
@@ -20,15 +26,15 @@ const Nations = ({ nations, textToSearch }) => {
               <span style={{ display: "block" }}>capital {filteredArray[0].capital}</span>
               <span style={{ display: "block" }}>area {filteredArray[0].area}</span>
             </div>
-            <p style={{fontWeight: "bold"}}>languages:</p>
+            <p style={{ fontWeight: "bold" }}>languages:</p>
             <ul>
-            {Object.values(filteredArray[0].languages).map((value) => {
-              return (
-                <li key={value}>
-                  {value}
-                </li>
-              )
-            })}
+              {Object.values(filteredArray[0].languages).map((value) => {
+                return (
+                  <li key={value}>
+                    {value}
+                  </li>
+                )
+              })}
             </ul>
             <img src={filteredArray[0].flags.svg} width="150px" alt="flag" />
           </>
