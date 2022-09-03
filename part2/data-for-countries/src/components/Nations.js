@@ -1,3 +1,5 @@
+import Weather from "./Weather"
+
 const Nations = ({ nations, textToSearch, setTextToSearch }) => {
   const handleClick = (event) => {
     setTextToSearch(event.target.value)
@@ -18,7 +20,7 @@ const Nations = ({ nations, textToSearch, setTextToSearch }) => {
             })}
           </div>
         )
-      } else {
+      } else if (filteredArray[0]) {
         return (
           <>
             <h1>{filteredArray[0].name.common}</h1>
@@ -37,6 +39,7 @@ const Nations = ({ nations, textToSearch, setTextToSearch }) => {
               })}
             </ul>
             <img src={filteredArray[0].flags.svg} width="150px" alt="flag" />
+            <Weather lat={filteredArray[0].capitalInfo.latlng[0]} lon={filteredArray[0].capitalInfo.latlng[1]} capital={filteredArray[0].capital} />
           </>
         )
       }
