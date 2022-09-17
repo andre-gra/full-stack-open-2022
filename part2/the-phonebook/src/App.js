@@ -4,6 +4,7 @@ import Persons from './components/Persons'
 import PersonForm from './components/PersonForm'
 import noteServices from './services/persons'
 import Notification from './components/Notification'
+import ErrorNotification from './components/ErrorNotification'
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -11,6 +12,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [textToSearch, setTextToSearch] = useState('')
   const [message, setMessage] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
 
   useEffect(() => {
     noteServices
@@ -61,6 +63,14 @@ const App = () => {
                 }, 5000)
               })
           })
+          .catch((error) => {
+            setErrorMessage(
+              `Information of ${newName} has already been removed from the server`
+            )
+            setTimeout(() => {
+              setErrorMessage(null)
+            }, 5000)
+          })
     }
     setNewName('')
     setNewNumber('')
@@ -95,6 +105,7 @@ const App = () => {
       <h1>Phonebook</h1>
       <Filter handleSearch={handleSearch} textToSearch={textToSearch} />
       <Notification message={message} />
+      <ErrorNotification error={errorMessage} />
       <h2>Add a new</h2>
       <PersonForm
         addName={addName}
