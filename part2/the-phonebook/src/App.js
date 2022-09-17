@@ -29,13 +29,25 @@ const App = () => {
       name: newName,
       number: newNumber
     }
-    noteServices
-      .create(personObject)
-      .then(newPersonObject => {
-        if (!persons.find(({ name, number }) => (name === newPersonObject.name || number === newPersonObject.number))) {
-          setPersons(persons.concat(personObject))
-        } else window.alert(`${newName} is already added to phonebook`)
-      })
+    const searchPerson = persons.find(({ name, number }) => (name === personObject.name || number === personObject.number))
+    if (!searchPerson) {
+      noteServices
+        .create(personObject)
+        .then(newPersonObject => {
+          setPersons(persons.concat(newPersonObject))
+        })
+    } else {
+      window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`) &&
+        noteServices
+          .update(searchPerson.id, personObject)
+          .then((response) => {
+            noteServices
+              .getAll()
+              .then(initialPersons => {
+                setPersons(initialPersons)
+              })
+          })
+    }
     setNewName('')
     setNewNumber('')
   }
@@ -54,10 +66,10 @@ const App = () => {
         .deletePerson(id)
         .then(response => {
           noteServices
-          .getAll()
-          .then(initialPersons => {
-          setPersons(initialPersons)
-      })
+            .getAll()
+            .then(initialPersons => {
+              setPersons(initialPersons)
+            })
         })
         .catch(error => {
           console.log("error", error)
