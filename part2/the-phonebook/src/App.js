@@ -3,12 +3,14 @@ import Filter from './components/Filter'
 import Persons from './components/Persons'
 import PersonForm from './components/PersonForm'
 import noteServices from './services/persons'
+import Notification from './components/Notification'
 
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [textToSearch, setTextToSearch] = useState('')
+  const [message, setMessage] = useState(null)
 
   useEffect(() => {
     noteServices
@@ -35,6 +37,12 @@ const App = () => {
         .create(personObject)
         .then(newPersonObject => {
           setPersons(persons.concat(newPersonObject))
+          setMessage(
+            `Added ${newName}`
+          )
+          setTimeout(() => {
+            setMessage(null)
+          }, 5000)
         })
     } else {
       window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`) &&
@@ -45,6 +53,12 @@ const App = () => {
               .getAll()
               .then(initialPersons => {
                 setPersons(initialPersons)
+                setMessage(
+                  `New number replaced for ${newName}`
+                )
+                setTimeout(() => {
+                  setMessage(null)
+                }, 5000)
               })
           })
     }
@@ -80,6 +94,7 @@ const App = () => {
     <div>
       <h1>Phonebook</h1>
       <Filter handleSearch={handleSearch} textToSearch={textToSearch} />
+      <Notification message={message} />
       <h2>Add a new</h2>
       <PersonForm
         addName={addName}
